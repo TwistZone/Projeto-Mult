@@ -1,0 +1,22 @@
+-Jogo Luta 2D
+-Habilidades e Personagens
+-Paródia(1 pessoa por faculdade)
+- fctuc respresentada por nos
+-Caras em foto/Caras em Design gráfico
+-Roupas da cor do curso(personalizável ou não)
+-Scenarios: Moelas,à frente do cartola,quimicas,porta férrea,largo da portagem,queimódromo
+-Provocações(beber cerveja,chorar,gregar)
+- Hit points por canecas de cerveja
+- Pistas bónus(coleccionar shots,
+- Quando ganhas aparece-se no carro da queima a festejar
+- Modo DEI (God mode)
+- nas personagens o que representar o dei pode ter a cara de um pc fixo com a foo da pessoa no ecra
+-8 faculdades
+- pessoa que representa letras teria uma letra como cabeça 
+
+menu :
+pausa 
+recomeçar 
+mudar de personagem 
+
+NOME ???
