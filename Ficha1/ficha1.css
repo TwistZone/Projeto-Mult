@@ -1,0 +1,107 @@
+p{
+    font-family: Arial,Helvetica,serif;
+    font-style: normal;
+    font-weight: bold;
+    color: white;
+    position: relative;
+    left: 500px;
+    top: 120px;
+    text-align: justify;
+    font-size: 10px;
+    max-width: 200px;
+}
+text{
+    font-family: Arial,Helvetica,serif;
+    text-align: justify;
+    color: black;
+    position: absolute;
+    width: auto;
+    height: auto;
+    top: 75%;
+    left: 5%;
+    margin-left: -25px;
+    margin-top: -180px;
+}
+figure{
+    animation-name: stiletto;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    height: 275px;
+    width: 350px;
+    align-content: center;
+    background-position: bottom ;
+    background-size: 325px 325px;
+    background-repeat: no-repeat;
+    position: relative;
+    left: 20px;
+    bottom: 75px;
+}
+
+header{
+    margin: auto;
+    height: 300px;
+    width: 50%;
+    background: url('logo.svg') 50% 50%/100% 300px no-repeat,
+                url('backgr.png') 50% 50%/100% 300px no-repeat,
+                linear-gradient(to bottom left, #141035 ,#47486A) ;
+    border-radius: 15px;
+}
+
+nav{
+    position: relative;
+    left: 25%;
+    line-height:50px;
+    background-color:white;
+    height:200px;
+    width:55%;
+    padding:5px;
+}
+button {
+    background-color: rgb(128, 128, 128);
+    border: none;
+    color: black;
+    width: 30%;
+    height: 25%;
+    text-align: center;
+    display: inline-block;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    opacity:1;
+    transition: 1.5s;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity:0.5;
+}
+button:active{
+     navbutton_background_color: black;
+     color:white;
+ }
+audio {
+     display:none;
+ }
+
+@keyframes stiletto {
+
+    0%{
+        opacity : 1;
+        background-image: url("view1.png");
+    }
+    33%{
+        opacity : 1;
+        background-image: url("view2.png");
+    }
+    66%{
+        opacity: 1;
+        background-image: url("view3.png");
+    }
+    100%{
+        opacity: 1;
+        background-image: url("view1.png");
+    }
+}
