@@ -2,19 +2,22 @@
 
 
 const opacDisabled = 0.3;
+const opacEnabled=1;
 const imgFolder = "../resources/image/";
 const txtFolder = "../resources/text/";
 const SlideOff=0;
 const SlideOn=1;
+const firstImage=1;
+const lastImage=16;
 
 (function() {
-	window.addEventListener("load", main);
+	window.addEventimageListener("load", main);
 }());
 
 function main() {
 	var nrPage = 1;
 	var intervalo = 0;
-	var lista = [nrPage,SlideOff,intervalo];
+	var imageList = [nrPage,SlideOff,intervalo];
 
 	var photo=document.getElementById("photo");
 	photo.src=imgFolder +"01.jpg";
@@ -24,43 +27,49 @@ function main() {
 
 	var audio = document.getElementById("audio");
 
-	var firstBtn = document.getElementsByTagName("button")[0];
-	var backBtn = document.getElementsByTagName("button")[1];
-	var nextBtn = document.getElementsByTagName("button")[2];
-	var lastBtn = document.getElementsByTagName("button")[3];
-	var slideShowBtn = document.getElementsByTagName("button")[4];
-	var soundBtn = document.getElementsByTagName("button")[5];
-	adbotoes(lista);
+	let firstBtn = document.getElementsByTagName("button")[0];
+	let backBtn = document.getElementsByTagName("button")[1];
+	let nextBtn = document.getElementsByTagName("button")[2];
+	let lastBtn = document.getElementsByTagName("button")[3];
+	let slideShowBtn = document.getElementsByTagName("button")[4];
+	let soundBtn = document.getElementsByTagName("button")[5];
+	let buttonimageList= [firstBtn,backBtn,nextBtn,lastBtn,slideShowBtn];
+	addButtons(imageList,buttonimageList);
 
-	var btnfunc = function(ev){
-		lista = BtnFunction(ev,lista);
+	var btnFunc = function(ev){
+		imageList = btnFunction(ev,imageList);
 	};
 
-	firstBtn.addEventListener("click", btnfunc);
-	backBtn.addEventListener("click", btnfunc);
-	nextBtn.addEventListener("click", btnfunc);
-	backBtn.addEventListener("click", btnfunc);
-	lastBtn.addEventListener("click", btnfunc);
-	slideShowBtn.addEventListener("click", btnfunc);
+	firstBtn.addEventimageListener("click", btnFunc);
+	backBtn.addEventimageListener("click", btnFunc);
+	nextBtn.addEventimageListener("click", btnFunc);
+	backBtn.addEventimageListener("click", btnFunc);
+	lastBtn.addEventimageListener("click", btnFunc);
+	slideShowBtn.addEventimageListener("click", btnFunc);
 
 	audio.play().catch(function(){
 	});
-	soundBtn.addEventListener("click",function(ev){
+	soundBtn.addEventimageListener("click",function(ev){
 		soundBtnHandler(ev,audio,soundBtn);
 	},true);
-
-	var escape=document.addEventListener("keydown",function(ev){
-		lista = EscapeListener(ev,lista);
+	var escape=document.addEventimageListener("keydown",function(ev){
+		imageList = escapeimageListener(ev,imageList,slideShowBtn);
 	},true);
 }
 
-function adbotoes(lista){
-	if(lista[0]==1 && lista[1]==SlideOff){	//primeira pagina
+function addButtons(imageList,buttonimageList){
+	let firstBtn=buttonimageList[0];
+	let backBtn=buttonimageList[1];
+	let nextBtn=buttonimageList[2];
+	let lastBtn=buttonimageList[3];
+	let slideShowBtn=buttonimageList[4];
+	
+	if(imageList[0]===firstImage && imageList[1]===SlideOff){	//primeira pagina
 		lastBtn.disabled = false;
 		nextBtn.disabled = false;
 
-		lastBtn.style.opacity = 1;
-		nextBtn.style.opacity = 1;
+		lastBtn.style.opacity = opacEnabled;
+		nextBtn.style.opacity = opacEnabled;
 
 		firstBtn.disabled = true;
 		backBtn.disabled = true;
@@ -72,11 +81,11 @@ function adbotoes(lista){
 		nextBtn.style.cursor = "pointer";
 		lastBtn.style.cursor = "pointer";
 		slideShowBtn.style.cursor = "pointer";
-	}else if(lista[0]==16  && lista[1]==SlideOff){	//ultima pagina
+	}else if(imageList[0]===lastImage  && imageList[1]===SlideOff){	//ultima pagina
 		firstBtn.disabled = false;
 		backBtn.disabled = false;
-		firstBtn.style.opacity = 1;
-		backBtn.style.opacity = 1;
+		firstBtn.style.opacity = opacEnabled;
+		backBtn.style.opacity = opacEnabled;
 
 		lastBtn.disabled = true;
 		nextBtn.disabled = true;
@@ -89,7 +98,7 @@ function adbotoes(lista){
 		backBtn.style.cursor = "pointer";
 		slideShowBtn.style.cursor = "pointer";
 	}
-	else if(lista[1]==SlideOn ){	//ao clicar no botao de slide mode
+	else if(imageList[1]===SlideOn ){	//ao clicar no botao de slide mode
 		lastBtn.disabled = true;
 		nextBtn.disabled = true;
 		firstBtn.disabled = true;
@@ -108,16 +117,16 @@ function adbotoes(lista){
 		backBtn.style.cursor = "default";
 		slideShowBtn.style.cursor = "default";
 	}
-	else if(lista[0]!=1 &&lista[0]!=16  && lista[1]==SlideOff){	//paginas a meio
+	else if(imageList[0]!==firstImage &&imageList[0]!==lastImage  && imageList[1]===SlideOff){	//paginas a meio
 		firstBtn.disabled = false;
 		backBtn.disabled = false;
 		lastBtn.disabled = false;
 		nextBtn.disabled = false;
 
-		firstBtn.style.opacity = 1;
-		backBtn.style.opacity = 1;
-		lastBtn.style.opacity = 1;
-		nextBtn.style.opacity = 1;
+		firstBtn.style.opacity = opacDisabled;
+		backBtn.style.opacity = opacEnabled;
+		lastBtn.style.opacity = opacEnabled;
+		nextBtn.style.opacity = opacEnabled;
 
 		lastBtn.style.cursor = "pointer";
 		nextBtn.style.cursor = "pointer";
@@ -129,7 +138,7 @@ function adbotoes(lista){
 }
 
 function soundBtnHandler(ev,audio,soundBtn) {
-	if (audio.muted == true) {
+	if (audio.muted === true) {
 		soundBtn.innerHTML = "<img src = '../resources/extra/soundOnBtn.png'>";
 		audio.play().catch(function(){
 		});
@@ -138,74 +147,72 @@ function soundBtnHandler(ev,audio,soundBtn) {
 	}
 	else
 	{
-		soundBtn.innerHTML = "<img src = '../resources/extra/soundOffBtn.png'>";
+		soundBtn.innerHTML = "<img src = '../resources/extra/soundOffBtn.png'>muted=false";
 		audio.muted=true;
 	}
 }
 
-function BtnFunction(ev,lista) {
+function btnFunction(ev,imageList) {
 	var id = ev.currentTarget.id;
-	if (id=="firstBtn"){
-		lista[0]=1;
-		MudaPag(lista);
-		adbotoes(lista);
+	if (id==="firstBtn"){
+		imageList[0]=1;
+		changePage(imageList);
+		addButtons(imageList);
 	}
-	else if(id =="backBtn"){
-		lista[0]--;
-		MudaPag(lista);
-		adbotoes(lista);
+	else if(id ==="backBtn"){
+		imageList[0]--;
+		changePage(imageList);
+		addButtons(imageList);
 	}
-	else if (id =="nextBtn"){
-		lista[0]++;;
-		MudaPag(lista);
-		adbotoes(lista);
+	else if (id ==="nextBtn"){
+		imageList[0]++;
+		changePage(imageList);
+		addButtons(imageList);
 	}
-	else if(id =="lastBtn"){
-		lista[0] = 16;
-		adbotoes(lista);
-		MudaPag(lista);
+	else if(id ==="lastBtn"){
+		imageList[0] = lastImage;
+		addButtons(imageList);
+		changePage(imageList);
 	}
-	else if (id =="slideShowBtn"){
-		lista[1]=SlideOn;
-		adbotoes(lista);
+	else if (id ==="slideShowBtn"){
+		imageList[1]=SlideOn;
+		addButtons(imageList);
 
 
-		var intervalo = setInterval(function(){
-			if(lista[0]==16){
-				lista[0]=1;
+		imageList[2]=setInterval(function () {
+			if (imageList[0] === lastImage) {
+				imageList[0] = firstImage;
+			} else {
+				imageList[0]++;
 			}
-			else{
-				lista[0]++;
-			}
-			MudaPag(lista);
-		},2000);
-		lista[2]=intervalo;
+			changePage(imageList);
+		}, 2000);
 	}
-	return lista;
+	return imageList;
 }
 
-function MudaPag(lista){
-	if (lista[0] < 10){
-		var source = imgFolder + "0" + lista[0].toString() + ".jpg";
-		var texto = txtFolder + "0" + lista[0].toString()  + ".txt";
+function changePage(imageList){
+	if (imageList[0] < 10){
+		var source = imgFolder + "0" + imageList[0].toString() + ".jpg";
+		var texto = txtFolder + "0" + imageList[0].toString()  + ".txt";
 	}
 	else{
-		var source = imgFolder + lista[0].toString()  + ".jpg";
-		var texto = txtFolder + lista[0].toString() + ".txt";
+		var source = imgFolder + imageList[0].toString()  + ".jpg";
+		var texto = txtFolder + imageList[0].toString() + ".txt";
 	}
 	photo.src = source;
 	text.src = texto;
 }
 
-function EscapeListener(ev,lista) {
-	if (ev.code == "Escape"  && lista[1] == SlideOn){
-		clearInterval(lista[2]);
-		lista[2]=0;
-		slideShowBtn.style.opacity =1;
+function escapeimageListener(ev,imageList,slideShowBtn) {
+	if (ev.code === "Escape"  && imageList[1] === SlideOn){
+		clearInterval(imageList[2]);
+		imageList[2]=0;
+		slideShowBtn.style.opacity =opacEnabled;
 		slideShowBtn.disabled = false;
-		lista[1] = SlideOff;
+		imageList[1] = SlideOff;
 
-		adbotoes(lista);
+		addButtons(imageList);
 	}
-	return lista;
+	return imageList;
 }
