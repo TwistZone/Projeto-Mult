@@ -11,6 +11,7 @@ function main()
 	var canvas = document.getElementById("canvas");
 	var ctx = canvas.getContext("2d");
 	var spArray;  //sprite array
+	var som;
 
 	canvas.addEventListener("initend", initEndHandler);
 	init(ctx);  //carregar todos os componentes
@@ -22,13 +23,14 @@ function main()
 		ctx.canvas.addEventListener("click", cch);
 		
 		spArray = ev.spArray;
+		som =ev.som;
 		//iniciar a animação
-		startAnim(ctx, spArray);
+		startAnim(ctx, spArray, som);
 	}
 
 	var cch = function(ev)
 	{
-		canvasClickHandler(ev, ctx, spArray);
+		canvasClickHandler(ev, ctx, spArray , som);
 	}	
 }
 
@@ -58,6 +60,10 @@ function init(ctx)
 	img2.id= "turbo";
 	img2.src = "resources/turboBig.png";
 
+
+	var audio = new Audio('resources/turbo.mp3');
+
+
 	function imgLoadedHandler(ev)
 	{
 		var img = ev.target;
@@ -71,10 +77,11 @@ function init(ctx)
 
 		nLoad++;
 
-		if (nLoad == totLoad)
+		if (nLoad === totLoad)
 		{
 			var ev2 = new Event("initend");
 			ev2.spArray = spArray;
+			ev2.som=audio;
 			ctx.canvas.dispatchEvent(ev2);
 		}
 
@@ -83,10 +90,10 @@ function init(ctx)
 
 
 //iniciar animação
-function startAnim(ctx, spArray)
+function startAnim(ctx, spArray , som)
 {
 	draw(ctx, spArray);
-	animLoop(ctx, spArray , 0);
+	animLoop(ctx, spArray , som,0);
 }
 
 
@@ -118,45 +125,37 @@ function clear(ctx, spArray)
 //--- controlo da animação: coração da aplicação!!!
 //-------------------------------------------------------------
 var auxDebug = 0;  //eliminar
-function animLoop(ctx, spArray , tempo_ini , temp_atual)
+function animLoop(ctx, spArray , tempo_ini ,som, temp_atual)
 {
 	var al = function(time)
 	{
 		if(tempo_ini == 0)
 			tempo_ini =time;
 
-		animLoop(ctx, spArray , tempo_ini ,time );
+		animLoop(ctx, spArray , tempo_ini ,som,time );
 	}
 	var reqID = window.requestAnimationFrame(al);
 
-	render(ctx, spArray, reqID , temp_atual-tempo_ini);
+	render(ctx, spArray, reqID , som,temp_atual-tempo_ini);
 }
 
 //resedenho, actualizações, ...
-function render(ctx, spArray, reqID, tempo)
+function render(ctx, spArray, reqID,som, tempo)
 {
-	var dim= spArray.length;
 	var cw = ctx.canvas.width;
 	var ch = ctx.canvas.height;
+	var sp = spArray[0];
+	var turbo = spArray[1];
+
+	if(sp.intersecaoTurbo(turbo)){
+		sp.speed +=2;
+		som.play();
+	}
 
 	//apagar canvas
 	ctx.clearRect(0, 0, cw, ch);
 
 	//animar sprites
-	for (var i=0 ; i<dim ; i++){
-		if(spArray[i].car === 1)
-			var sp = spArray[i];
-		else
-			var turbo = spArray[i];
-	}
-	//mais a cima , antes de apagar a canvas
-	if(sp.intersecaoTurbo(turbo)){
-		sp.speed +=2;
-
-		var audio = new Audio('resources/turbo.mp3');
-		audio.play();
-	}
-
 	if (sp.x + sp.width < cw)
 	{
 		if (sp.x + sp.width + sp.speed > cw)
@@ -171,9 +170,6 @@ function render(ctx, spArray, reqID, tempo)
 		sp.clickable = true;
 	}
 
-
-
-
 	//redesenhar sprites e texto
 	var txt = "Time: " + Math.trunc(tempo)+ " msec";
 	ctx.fillText(txt, cw/2, ch);
@@ -184,24 +180,18 @@ function render(ctx, spArray, reqID, tempo)
 //-------------------------------------------------------------
 //--- interacção com o rato
 //-------------------------------------------------------------
-function canvasClickHandler(ev, ctx, spArray)
+function canvasClickHandler(ev, ctx, spArray,som)
 {
-	var dim = spArray.length;
-
-	for (var i=0 ; i<dim ; i++){
-		if(spArray[i].car === 1)
-			var sp = spArray[i];
-		else
-			var turbo = spArray[i];
-	}
+	var sp = spArray[0];
+	var turbo = spArray[1];
 
 	if (sp.clickedBoundingBox(ev , ctx))
 	{
 		sp.reset(ev, ctx);
-		animLoop(ctx, spArray , 0);
+		animLoop(ctx, spArray ,som, 0);
 	}
 	else if(turbo.clickedBoundingBox(ev , ctx)){
 		sp.reset(ev, ctx);
-		animLoop(ctx, spArray , 0);
+		animLoop(ctx, spArray ,som, 0);
 	}
 }
