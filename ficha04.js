@@ -23,7 +23,7 @@ function main()
 		ctx.canvas.addEventListener("click", cch);
 		
 		spArray = ev.spArray;
-		som =ev.som;
+		som=ev.som;
 		//iniciar a animação
 		startAnim(ctx, spArray, som);
 	}
@@ -61,7 +61,7 @@ function init(ctx)
 	img2.src = "resources/turboBig.png";
 
 
-	var audio = new Audio('resources/turbo.mp3');
+	var som = new Audio('resources/turbo.mp3');
 
 
 	function imgLoadedHandler(ev)
@@ -81,7 +81,7 @@ function init(ctx)
 		{
 			var ev2 = new Event("initend");
 			ev2.spArray = spArray;
-			ev2.som=audio;
+			ev2.som=som;
 			ctx.canvas.dispatchEvent(ev2);
 		}
 
@@ -90,10 +90,11 @@ function init(ctx)
 
 
 //iniciar animação
-function startAnim(ctx, spArray , som)
+function startAnim(ctx, spArray ,som)
 {
+	console.log("estou dentro da anima");
 	draw(ctx, spArray);
-	animLoop(ctx, spArray , som,0);
+	animLoop(ctx, spArray , som,0,0);
 }
 
 
@@ -124,19 +125,19 @@ function clear(ctx, spArray)
 //-------------------------------------------------------------
 //--- controlo da animação: coração da aplicação!!!
 //-------------------------------------------------------------
-var auxDebug = 0;  //eliminar
-function animLoop(ctx, spArray , tempo_ini ,som, temp_atual)
+
+function animLoop(ctx, spArray ,som,temp_ini, temp_atual)
 {
 	var al = function(time)
 	{
-		if(tempo_ini == 0)
-			tempo_ini =time;
+		if(temp_ini == 0)
+			temp_ini =time;
 
-		animLoop(ctx, spArray , tempo_ini ,som,time );
+		animLoop(ctx, spArray , som,temp_ini,time);
 	}
 	var reqID = window.requestAnimationFrame(al);
 
-	render(ctx, spArray, reqID , som,temp_atual-tempo_ini);
+	render(ctx, spArray, reqID , som,temp_atual-temp_ini);
 }
 
 //resedenho, actualizações, ...
@@ -147,9 +148,12 @@ function render(ctx, spArray, reqID,som, tempo)
 	var sp = spArray[0];
 	var turbo = spArray[1];
 
-	if(sp.intersecaoTurbo(turbo)){
-		sp.speed +=2;
+	if(sp.intersecaoTurbo(sp,turbo)){
 		som.play();
+		sp.speed +=2;
+		turbo.clear(ctx);
+		turbo.x = cw/2;
+		turbo.y= ch/2;
 	}
 
 	//apagar canvas
@@ -171,7 +175,7 @@ function render(ctx, spArray, reqID,som, tempo)
 	}
 
 	//redesenhar sprites e texto
-	var txt = "Time: " + Math.trunc(tempo)+ " msec";
+	var txt = "Time: " + Math.round(tempo)+ " msec";
 	ctx.fillText(txt, cw/2, ch);
 	draw(ctx, spArray);
 }
@@ -188,10 +192,10 @@ function canvasClickHandler(ev, ctx, spArray,som)
 	if (sp.clickedBoundingBox(ev , ctx))
 	{
 		sp.reset(ev, ctx);
-		animLoop(ctx, spArray ,som, 0);
+		animLoop(ctx, spArray ,som, 0,0);
 	}
 	else if(turbo.clickedBoundingBox(ev , ctx)){
 		sp.reset(ev, ctx);
-		animLoop(ctx, spArray ,som, 0);
+		animLoop(ctx, spArray ,som, 0,0);
 	}
 }

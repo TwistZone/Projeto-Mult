@@ -40,6 +40,7 @@ class SpriteImage
 		this.clear(ctx);
 		this.x = this.xIni;
 		this.y = this.yIni;
+		//console.log("seped inicila", this.speedI);
 		this.speed = this.speedI;
 		this.clickable = this.clickableIni;
 	}
@@ -51,7 +52,6 @@ class SpriteImage
 		canvas.height = this.height;
 
 		var ctx = canvas.getContext("2d");
-		//ctx.canvas.addEventListener("click", this.clickedBoundingBox);
 		ctx.drawImage(img , 0, 0, this.width , this.height);
 		return ctx.getImageData(0,0,this.width , this.height);
 	}
@@ -99,20 +99,44 @@ class SpriteImage
 			return  false;
 
 	}
-	intersecaoTurbo(turbo) {
-		if ((turbo.x + turbo.width) > this.x && turbo.x < (this.x + this.width) && (turbo.y + turbo.height) > this.y && turbo.y < (this.y + this.height)) {
 
-			var turb = turbo.imageData.data;
-			var car = this.imageData.data;
-			//alterar a cena de dar uma
-			for (var i = 0; i < car.length; i += 4) {
-				for (var j = 0; j < turb.length; j += 4) {
-					if (car[i + 3] != 0 && turb[j + 3] != 0)
-						return true;
-				}
+
+
+	intersecaoTurbo(s1,s2) {
+
+		if (s1.x >= s2.x && s1.x <= s2.x + s2.width && s1.y >= s2.y && s1.y <= s2.y + s2.height){
+			console.log("nem no box");
+			return false;
+		}
+
+		var xmin = Math.max(s1.x, s2.x);
+		var xMax = Math.min(s1.x + s1.width, s2.x + s2.width);
+		var ymin = Math.max(s1.y, s2.y);
+		var yMax = Math.min(s1.y + s1.height, s2.y + s2.height);
+
+
+		for (let y = ymin; y <= yMax; y++) {
+			console.log("dentro do for");
+			for (let x = xmin; x <= xMax; x++) {
+				console.log("dentro do outro log");
+				var yLocal = Math.round(x - s1.x);
+				var xLocal = Math.round(y - s1.y);
+				var pixelNum = xLocal + yLocal * s1.width;
+				var pixelPosArrayS1 = pixelNum * 4 + 3;
+
+				var yLocalS2 = Math.round(x - s2.x);
+				var xLocalS2 = Math.round(y - s2.y);
+				var pixelNumS2 = xLocalS2 + yLocalS2 * s2.width;
+				var pixelPosArrayS2 = pixelNumS2 * 4 + 3;
+
+				if (s1.imageData.data[pixelPosArrayS1] && s2.imageData.data[pixelPosArrayS2])
+					return true;
 			}
-		} else
 			return false;
 
+		}
+
 	}
+
 }
+
