@@ -14,9 +14,11 @@ class SpriteImage
 		this.speedI = speed;
 		this.speed = speed;
 
+
 		//imagem
 		this.img=img;
 		this.imageData =this.getImageData(img);
+
 		//rato
 		this.clickableIni = clickable;
 		this.clickable = clickable;
@@ -24,7 +26,11 @@ class SpriteImage
 		this.mouseDown=false;
 		this.mouseOffsetX=0;
 		this.mouseOffsetY =0;
-
+		//teclado
+		this.left=false;
+		this.right=false;
+		this.up=false;
+		this.down=false;
 	}
 
 
@@ -37,7 +43,7 @@ class SpriteImage
 	clear(ctx)
 	{
 		ctx.clearRect(this.x, this.y, this.width, this.height);
-	}	
+	}
 
 
 	reset(ev, ctx)
