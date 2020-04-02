@@ -2,7 +2,7 @@
 
 class SpriteImage
 {
-	constructor(x, y, w, h, speed, clickable, img , car)
+	constructor(x, y, w, h, speed, clickable, img )
 	{
 		//posição e movimento
 		this.xIni = x;
@@ -19,7 +19,12 @@ class SpriteImage
 		this.imageData =this.getImageData(img);
 		//rato
 		this.clickableIni = clickable;
-		this.clickable = clickable;			
+		this.clickable = clickable;
+		this.draggable = true;
+		this.mouseDown=false;
+		this.mouseOffsetX=0;
+		this.mouseOffsetY =0;
+
 	}
 
 
@@ -64,7 +69,7 @@ class SpriteImage
 
 		if (mx >= this.x && mx <= this.x + this.width && my >= this.y && my <= this.y + this.height){
 
-			return this.mouseincar(ev,ctx);
+			return this.mouseinimg(ev,ctx);
 		}
 
 		else
@@ -81,7 +86,7 @@ class SpriteImage
 			return this.mouseOverBoundingBox(ev , ctx);
 	}
 
-	mouseincar(ev , ctx){
+	mouseinimg(ev , ctx){
 
 		var mx = Math.round(ev.offsetX-this.x);  //mx, my = mouseX, mouseY na canvas
 		var my = Math.round(ev.offsetY - this.y);
@@ -105,7 +110,6 @@ class SpriteImage
 	intersecaoTurbo(s1,s2) {
 
 		if (s1.x >= s2.x && s1.x <= s2.x + s2.width && s1.y >= s2.y && s1.y <= s2.y + s2.height){
-			console.log("nem no box");
 			return false;
 		}
 
@@ -116,9 +120,7 @@ class SpriteImage
 
 
 		for (let y = ymin; y <= yMax; y++) {
-			console.log("dentro do for");
 			for (let x = xmin; x <= xMax; x++) {
-				console.log("dentro do outro log");
 				var yLocal = Math.round(x - s1.x);
 				var xLocal = Math.round(y - s1.y);
 				var pixelNum = xLocal + yLocal * s1.width;
@@ -129,13 +131,11 @@ class SpriteImage
 				var pixelNumS2 = xLocalS2 + yLocalS2 * s2.width;
 				var pixelPosArrayS2 = pixelNumS2 * 4 + 3;
 
-				if (s1.imageData.data[pixelPosArrayS1] && s2.imageData.data[pixelPosArrayS2])
+				if (s1.imageData.data[pixelPosArrayS1] !== 0 && s2.imageData.data[pixelPosArrayS2] !== 0)
 					return true;
 			}
-			return false;
-
 		}
-
+		return false;
 	}
 
 }

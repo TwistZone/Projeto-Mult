@@ -21,6 +21,10 @@ function main()
 	{
 		//instalar listeners do rato	
 		ctx.canvas.addEventListener("click", cch);
+
+		ctx.canvas.addEventListener("mousedown" ,mdh);
+		ctx.canvas.addEventListener("mouseup",muh);
+		ctx.canvas.addEventListener("mousemove" , mmh);
 		
 		spArray = ev.spArray;
 		som=ev.som;
@@ -31,7 +35,17 @@ function main()
 	var cch = function(ev)
 	{
 		canvasClickHandler(ev, ctx, spArray , som);
-	}	
+	}
+	var mdh = function (ev) {
+		canvasMouseDownHandler(ev ,spArray,ctx);
+	}
+	var muh = function (ev) {
+		canvasMouseUpHandler(ev,spArray,ctx);
+	}
+	var mmh =function (ev) {
+		canvasMouseMoveHandler(ev,spArray,ctx);
+	}
+
 }
 
 
@@ -73,7 +87,7 @@ function init(ctx)
 		if(img.id === "car")
 			spArray[0] = new SpriteImage(0, 0, nw/4, nh/4, 1, false, img);
 		else
-			spArray[1] = new SpriteImage(250, 2, nw, nh, 1, true, img);
+			spArray[1] = new SpriteImage(300, 15, nw, nh, 1, true, img);
 
 		nLoad++;
 
@@ -92,7 +106,6 @@ function init(ctx)
 //iniciar animação
 function startAnim(ctx, spArray ,som)
 {
-	console.log("estou dentro da anima");
 	draw(ctx, spArray);
 	animLoop(ctx, spArray , som,0,0);
 }
@@ -192,10 +205,40 @@ function canvasClickHandler(ev, ctx, spArray,som)
 	if (sp.clickedBoundingBox(ev , ctx))
 	{
 		sp.reset(ev, ctx);
+		turbo.reset(ev,ctx);
 		animLoop(ctx, spArray ,som, 0,0);
 	}
 	else if(turbo.clickedBoundingBox(ev , ctx)){
 		sp.reset(ev, ctx);
+		turbo.reset(ev,ctx);
 		animLoop(ctx, spArray ,som, 0,0);
 	}
+}
+
+function canvasMouseDownHandler(ev ,spArray,ctx) {
+	var sp= spArray[1];
+	if(sp.draggable && sp.clickedBoundingBox(ev ,ctx)){
+		sp.mouseDown = true;
+		//guarda dos valores do mouseoffset
+		sp.mouseOffsetX = ev.offsetX-sp.x;
+		sp.mouseOffsetY = ev.offsetY -sp.y;
+
+	}
+}
+
+function canvasMouseUpHandler(ev ,spArray,ctx) {
+	var sp= spArray[1];
+	if(sp.draggable){
+		sp.mouseDown=false;
+	}
+
+}
+
+function canvasMouseMoveHandler(ev,spArray,ctx) {
+	var sp=spArray[1];
+	if(sp.draggable && sp.mouseDown){
+		sp.x = ev.offsetX -sp.mouseOffsetX;
+		sp.y=ev.offsetY-sp.mouseOffsetY;
+	}
+
 }
