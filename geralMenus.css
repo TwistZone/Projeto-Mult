@@ -1,0 +1,81 @@
+/*para coisas como os botoes que sao repetidos em varias paginas eg:botoes verdes*/
+
+/*
+button{
+    cursor: pointer;
+    position:relative;
+    background:#a9d18e;
+    border-color:#c5e0b3;
+    border-width:2px;
+    border-style:solid;
+    font-family:"Copperplate Gothic Light";
+    font-size:25px;
+    color:black;
+    height:50px;
+    width:150px;
+}
+*/
+html {
+    height: 100%;
+    width: 100%;
+}
+body {
+    min-height: 100vh;
+    min-width: 100vh;
+}
+
+
+
+h1{
+    font-family:"Copperplate Gothic Bold";
+    color:black;
+    font-size:70px;
+    font-weight:bold;
+}
+
+
+.grnBtn{
+    cursor: pointer;
+    position:relative;
+    background:#a9d18e;
+    border-color:#c5e0b3;
+    border-width:2px;
+    border-style:solid;
+    font-family:"Copperplate Gothic Light";
+    font-size:25px;
+    color:black;
+    height:50px;
+    width:150px;
+}
+
+.orngBtn{
+    cursor: pointer;
+    position:relative;
+    background:#c55a11;
+    border-color:#f7cbac;
+    border-width:2px;
+    border-style:solid;
+    font-family:"Copperplate Gothic Light";
+    font-size:25px;
+    color:black;
+    height:50px;
+    width:150px;
+}
+
+#grnSqr{
+
+    width:120vh;
+    height:70vh;
+    /*
+    width:1536px;
+    height:756px;
+    */
+    background:#a9d18e;
+    border-color:#c5e0b3;
+    border-width:2px;
+    border-style:solid;
+    position: absolute;
+    top: 15vh;
+    left: 30vh;
+
+}
