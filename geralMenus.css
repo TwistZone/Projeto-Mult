@@ -22,6 +22,7 @@ html {
 body {
     min-height: 100vh;
     min-width: 100vh;
+    background: #2f5597;
 }
 
 
@@ -29,7 +30,7 @@ body {
 h1{
     font-family:"Copperplate Gothic Bold";
     color:black;
-    font-size:70px;
+    font-size:60px;
     font-weight:bold;
 }
 
@@ -44,8 +45,8 @@ h1{
     font-family:"Copperplate Gothic Light";
     font-size:25px;
     color:black;
-    height:50px;
-    width:150px;
+    height:80px;
+    width:200px;
 }
 
 .orngBtn{
@@ -58,8 +59,8 @@ h1{
     font-family:"Copperplate Gothic Light";
     font-size:25px;
     color:black;
-    height:50px;
-    width:150px;
+    height:80px;
+    width:200px;
 }
 
 #grnSqr{
@@ -75,7 +76,7 @@ h1{
     border-width:2px;
     border-style:solid;
     position: absolute;
-    top: 15vh;
+    top: 10vh;
     left: 30vh;
 
 }
