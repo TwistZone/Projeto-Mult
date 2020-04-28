@@ -1,0 +1,67 @@
+/*
+id="jogar" class="grnBtn">JOGAR</button>
+                <button id="conquistas" class="grnBtn">CONQUISTAS</button>
+                <button id="definiçoes" class="grnBtn">DEFINIÇÕES</button>
+                <button id="ajuda" class="grnBtn">AJUDA</button>
+                <button id="sair" class="grnBtn">SAIR</button>
+                <button id="creditos"
+ */
+
+#jogar{
+    position:absolute;
+    left: 45%;
+    top: 40vh;
+}
+
+#conquistas{
+    position:absolute;
+    left: 45%;
+    top: 50vh;
+}
+
+#definiçoes{
+    position:absolute;
+    left: 45%;
+    top: 60vh;
+}
+
+#ajuda{
+    position:absolute;
+    left: 45%;
+    top: 70vh;
+}
+
+#sair{
+    position:absolute;
+    left: 45%;
+    top: 80vh;
+}
+
+#creditos{
+    position:absolute;
+    left: 45%;
+    top: 90vh;
+}
+
+#malefighter{
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    position: absolute;
+    left: 20vh;
+    bottom: 0;
+    height: 60%;
+}
+
+#femalefighter{
+    position: absolute;
+    right: 20vh;
+    bottom: 0;
+    height: 60%;
+}
+
+#title{
+    width: 50%;
+    position: absolute;
+    top: 10vh;
+    left: 51vh;
+}

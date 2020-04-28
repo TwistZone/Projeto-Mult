@@ -15,13 +15,12 @@ button{
     width:150px;
 }
 */
+
 html {
     height: 100%;
     width: 100%;
 }
 body {
-    min-height: 100vh;
-    min-width: 100vh;
     background: #2f5597;
 }
 
@@ -79,4 +78,15 @@ h1{
     top: 10vh;
     left: 30vh;
 
+}
+
+#voltar{
+    position: absolute;
+    top: 85vh;
+    left: 34vh;
+}
+
+.logo{
+    position: absolute;
+    left: 25vh;
 }

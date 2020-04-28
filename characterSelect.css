@@ -78,11 +78,6 @@
     left: 120vh;
 }
 
-#voltar{
-    position: absolute;
-    top: 85vh;
-    left: 34vh;
-}
 
 #vamos{
     position: absolute;
@@ -93,13 +88,14 @@
 h1{
     position: absolute;
     top: 13vh;
-    left: 50vh;
+    /*left: 50vh;*/
+    left: 55vh;
 }
 
 /*TODO TEMPORARIO PRA TESTAR TAMANHOS*/
 
 #characterAtual{
-    content: url("../assets/spritesRapaz/boytest.png");
+    content: url("../assets/spritesFDUC/StandingPunchBoyDireito.png");
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
     position: absolute;
