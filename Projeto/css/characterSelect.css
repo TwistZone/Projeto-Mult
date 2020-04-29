@@ -1,0 +1,107 @@
+
+/*legacy code now in geralMenus*/
+/*
+.grnBtn{
+    cursor: pointer;
+    position:relative;
+    background:#a9d18e;
+    border-color:#c5e0b3;
+    border-width:2px;
+    border-style:solid;
+    font-family:"Copperplate Gothic Light";
+    font-size:25px;
+    color:black;
+    height:50px;
+    width:150px;
+}
+
+.orngBtn{
+    cursor: pointer;
+    position:relative;
+    background:#c55a11;
+    border-color:#f7cbac;
+    border-width:2px;
+    border-style:solid;
+    font-family:"Copperplate Gothic Light";
+    font-size:25px;
+    color:black;
+    height:50px;
+    width:150px;
+}
+*/
+
+#fctuc{
+     position: absolute;
+     top: 55vh;
+     left: 45vh;
+ }
+
+#fluc{
+    position:absolute;
+    top: 55vh;
+    left: 70vh;
+}
+
+#fmuc{
+    position:absolute;
+    top: 55vh;
+    left: 95vh;
+}
+
+#fduc{
+    position:absolute;
+    top: 55vh;
+    left: 120vh;
+}
+
+#ffuc{
+    position: absolute;
+    top: 65vh;
+    left: 45vh;
+}
+
+#feuc{
+    position:absolute;
+    top: 65vh;
+    left: 70vh;
+}
+
+#fpceuc{
+    position:absolute;
+    top: 65vh;
+    left: 95vh;
+}
+
+#fcdefuc{
+    position:absolute;
+    top: 65vh;
+    left: 120vh;
+}
+
+
+#vamos{
+    position: absolute;
+    top: 85vh;
+    left: 134vh;
+}
+
+h1{
+    position: absolute;
+    top: 13vh;
+    /*left: 50vh;*/
+    left: 55vh;
+}
+
+/*TODO TEMPORARIO PRA TESTAR TAMANHOS*/
+
+#characterAtual{
+    content: url("../assets/spritesFDUC/StandingPunchBoyDireito.png");
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    position: absolute;
+    top: 22vh;
+    left: 75vh;
+    height: 30%;
+    width: 18%;
+}
+
