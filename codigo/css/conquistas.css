@@ -1,0 +1,65 @@
+h3{
+    position: absolute;
+    top: 35vh;
+    left: 85vh;
+    font-size: 40px;
+    z-index: 12;
+}
+
+p{
+    font-size: 25px;
+    display: inline-block;
+    width: 450px;
+    text-align: center;
+    position: absolute;
+    top: 43vh;
+    left: 70vh;
+    z-index: 11;
+}
+
+
+.grnBtnConquitas{
+    cursor: pointer;
+    position:absolute;
+    text-align: center;
+    background:#a9d18e;
+    border-color:#c5e0b3;
+    border-width:2px;
+    border-style:solid;
+    font-family:"Copperplate Gothic Light";
+    font-size:30px;
+    color:black;
+    bottom: 3%;
+    top: 89%;
+    left: 43%;
+    right: 40%;
+    width: 15%;
+    height: 8%;
+}
+
+#blueNotSquare{
+    position: absolute;
+    left: 15%;
+    right: 20%;
+    bottom: 15%;
+    top :15%;
+    z-index: 10;
+}
+
+#proximo{
+    cursor: pointer;
+    position:absolute;
+    bottom: 3%;
+    top: 84.5%;
+    left: 64%;
+    right: 15%;
+
+}
+
+#anterior{
+    cursor: pointer;
+    position:absolute;
+    top: 84.5%;
+    left: 20%;
+    right: 15%;
+}
