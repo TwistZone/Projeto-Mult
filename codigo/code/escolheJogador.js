@@ -9,7 +9,7 @@ function main() {
     var Escolhida;
     //carrega a 1 imagem
     var jogadorAtual=document.getElementById("jogadorAtual");
-    jogadorAtual.src= "../../assets/menina fctuc/normal.png";
+    jogadorAtual.src= "../../assets/spritesFctuc/normal.png";
 
 
     var voltar = document.getElementById("voltar");
@@ -40,20 +40,9 @@ function main() {
     fcdefuc.addEventListener("click" , nav);
 
 
-
-
     voltar.addEventListener("click" , voltarClikHandler);
     vamos.addEventListener("click" , vamosClickHandler);
-/*
-    fctuc.addEventListener("click" , fctucClickHandler(Escolhida));
-    fluc.addEventListener("click" , flucClickHandler(Escolhida));
-    fmuc.addEventListener("click" , fmucClickHandler(Escolhida));
-    fduc.addEventListener("click" , ffucClickHandler(Escolhida));
-    ffuc.addEventListener("click" , ffucClickHandler(Escolhida));
-    feuc.addEventListener("click" , feucClickHandler(E));
-    fpceuc.addEventListener("click" , fpceucClickHandler);
-    fcdefuc.addEventListener("click" , fcdefucClickHandler);
-*/
+
 
 }
 
@@ -68,21 +57,21 @@ function nextI(ev ,Escolhida) {
     console.log("entrei");
     var id = ev.currentTarget.id;
     if(id === "fctuc"){
-        jogadorAtual.src= "../../assets/menina fctuc/normal.png";
+        jogadorAtual.src= "../../assets/spritesFctuc/normal.png";
     }else if(id==="fluc"){
-        jogadorAtual.src= "../../assets/menino letras/normal.png";
+        jogadorAtual.src= "../../assets/spritesLetras/normal.png";
     }else if(id==="fmuc"){
-        jogadorAtual.src= "../../assets/menina medicina/normal.png";
+        jogadorAtual.src= "../../assets/spritesMedicina/normal.png";
     }else if(id==="fduc"){
-        jogadorAtual.src= "../../assets/menino direito/normal.png";
+        jogadorAtual.src= "../../assets/spritesDireito/normal.png";
     }else if(id==="ffuc"){
-        jogadorAtual.src= "../../assets/menina farmacia/normal.png";
+        jogadorAtual.src= "../../assets/spritsFarmacia/normal.png";
     }else if(id==="feuc"){
-        jogadorAtual.src= "../../assets/menino economia/normal.png";
+        jogadorAtual.src= "../../assets/spritesEconomia/normal.png";
     }else if(id==="fpceuc"){
-        jogadorAtual.src= "../../assets/menina psicologia/normal.png";
+        jogadorAtual.src= "../../assets/spritesPsicologia/normal.png";
     }else if(id==="fcdefuc"){
-        jogadorAtual.src= "../../assets/menino desporto/normal.png";
+        jogadorAtual.src= "../../assets/spritesDesporto/normal.png";
     }
 
     return id;
