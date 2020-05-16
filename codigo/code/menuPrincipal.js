@@ -38,7 +38,7 @@ function definicoesClickHandler(ev) {
 }
 
 function ajudaClickHandler(ev) {
-    //parent.window.postMessage("defincoes", "*");
+    parent.window.postMessage("ajuda", "*");
 }
 
 function creditosClickHandler(ev) {

@@ -82,7 +82,11 @@ function definicoes(ev) {
 
 }
 function ajuda(ev) {
+    var frm = document.getElementsByTagName("iframe")[0];
+    frm.src;
 
+    //hidePage(pageNum);
+    showPage("ajuda");
 }
 function creditos(ev) {
     var frm = document.getElementsByTagName("iframe")[0];
