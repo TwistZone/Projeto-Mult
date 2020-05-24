@@ -1,0 +1,16 @@
+#clock{
+    font-family:"Copperplate Gothic Bold";
+    color:yellow;
+    font-size: 80px;
+    position: absolute;
+    left: 47%;
+    top : 4%;
+}
+
+
+body {
+    min-height:100%;
+    min-width: 100%;
+    background: #2f5597;
+
+}

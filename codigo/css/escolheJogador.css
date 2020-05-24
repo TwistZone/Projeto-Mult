@@ -1,0 +1,50 @@
+h2{
+    font-family:"Copperplate Gothic Bold";
+    text-align: right;
+    color:black;
+    font-size:41px;
+    font-weight:bold;
+    top: 10%;
+}
+.charBtnTop {
+    justify-content: space-between;
+    display: flex;
+    width: 80%;
+    text-align: center;
+    position: absolute;
+    top: 65%;
+    left: 12%;
+}
+
+.charBtnBot {
+    justify-content: space-between;
+    text-align: center;
+    position: absolute;
+    display: flex;
+    width: 80%;
+    left: 12%;
+    top: 81%;
+}
+
+
+#vamos{
+    position: absolute;
+    bottom: 3%;
+    top: 89%;
+    left: 65%;
+}
+
+#jogadorAtual{
+    /*content: url("../assets/");*/
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    position: absolute;
+    top: 18%;
+    left: 40%;
+    width: 21%;
+    height: 44%;
+}
+
+
+
+
