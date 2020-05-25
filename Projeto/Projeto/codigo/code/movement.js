@@ -282,8 +282,6 @@ function render(ctx, jogador,oponente,finoArray,reqID)
         jogador.hp -= 0.5;
     console.log(jogador.hp);
     console.log(oponente.hp);
-    if(jogador.hp <= 0 || oponente.hp <= 0)
-        window.cancelAnimationFrame(reqID);
     draw(ctx,spArray);
 }
 
