@@ -8,8 +8,8 @@
 function main() {
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");  //get content
-    var jogador = new Personagem("Psicologia", "R");
-    var oponente = new Personagem("Psicologia","L");
+    var jogador = new Personagem("Psicologia", "r",5); // facing right
+    var oponente = new Personagem("Psicologia","l", 5); // facing left
     var imgArray = jogador.images;
     var opArray = oponente.images;
     var finoArray;
@@ -126,7 +126,9 @@ function animLoop(ctx,jogador,oponente,finoArray)
         fps = 10;
     else if(jogador.spriteCurr.special)
         fps = 5;
-    else fps = 45;
+    else if (jogador.spriteCurr.kick)
+        fps = 25;
+    else fps = 40;
     var al = function(time)
     {
         animLoop(ctx, jogador,oponente,finoArray);
@@ -148,7 +150,7 @@ function render(ctx, jogador,oponente,finoArray,reqID)
     var opbullet = oponente.sprites[14];
     var spArray = [sp,op];
     var r;
-
+    console.log(jogador.sprites[11].img.src);
     //apagar canvas
     ctx.clearRect(0, 0, cw, ch);
     if(!bullet.bullet)
@@ -160,9 +162,12 @@ function render(ctx, jogador,oponente,finoArray,reqID)
         sp.x -= sp.speed;
         jogador.walk();
     }
-    if (sp.right && !sp.intersecao(op)) {
-        sp.x += sp.speed;
-        jogador.walk();
+    if (sp.right ) {
+        if(!sp.intersecao(op)) {
+            sp.x += sp.speed;
+            jogador.walk();
+        }
+        op.x += op.speed;
     }
     if (sp.up) {
         const yMax = 250;
@@ -180,18 +185,62 @@ function render(ctx, jogador,oponente,finoArray,reqID)
         jogador.defend();
     }
     if (sp.kick){
+        r = Math.floor(Math.random()* 20);
         jogador.kick();
-        if(sp.intersecao(oponente) && !oponente.down )
+        if (r < 5)
+            oponente.defend();
+        if(sp.intersecao(op) && !op.down && sp === jogador.sprites[11] )
             oponente.hp -= 0.5;
     }
     if (sp.punch) {
+        r = Math.floor(Math.random()* 20);
         jogador.punch();
-        if(sp.intersecao(oponente) && !oponente.down )
+        if (r < 5)
+            oponente.defend();
+        if(sp.intersecao(op) && !op.down && sp === jogador.sprites[6] )
             oponente.hp -= 0.5;
+
     }
     if(sp.special){
+        r = Math.floor(Math.random()* 10);
         jogador.throw();
         bullet.bullet = true;
+        if (r < 3)
+            oponente.defend();
+    }
+    if(!sp.left && !sp.right && !sp.up && !sp.down && !sp.kick && !sp.punch && !sp.special)
+        jogador.standard();
+    if(!op.intersecao(sp)){
+        r = Math.floor(Math.random()* 100);
+        if(r < 50) {
+            if (op.x > sp.x + 70){
+                op.x -= Math.floor(op.speed / 2);
+                oponente.walk();
+             }
+            else if(op.x < sp.x)
+                op.x = sp.x + 70;
+        }
+        else if( r == 99) {
+            oponente.throw();
+            opbullet.bullet = true;
+        }
+    }
+    else{
+        r = Math.floor(Math.random()*5);
+        if(r == 0) {
+            oponente.kick();
+        }
+        else if (r == 1) {
+            oponente.punch();
+        }
+        else if( r > 2){
+            op.x -= op.speed;
+            oponente.walk();
+        }
+        else if(op.x < cw - 5 && !op.intersecao(jogador)) {
+            op.x += op.speed;
+            oponente.walk();
+        }
     }
     if(bullet.bullet) {
         const range = 20;
@@ -219,37 +268,18 @@ function render(ctx, jogador,oponente,finoArray,reqID)
         }
         opbullet.bulletTime++;
     }
-    if(!sp.left && !sp.right && !sp.up && !sp.down && !sp.kick && !sp.punch && !sp.special)
-        jogador.standard();
-    if(!op.intersecao(sp)){
-        r = Math.floor(Math.random()* 10);
-        if(r < 6) {
-            op.x -= op.speed;
-            oponente.walk();
-        }
-        else if( r > 6 && r <= 8)
-            oponente.throw();
-        else oponente.defend();
-    }
-    else{
-        r = Math.floor(Math.random()*3);
-        if(r == 0)
-            oponente.kick();
-        if(op.intersecao(jogador) && !jogador.down)
-            jogador.hp -= 0.5;
-        else if (r == 1)
-            oponente.punch();
-        if(op.intersecao(jogador) && !jogador.down)
-            jogador.hp -= 0.5;
-        else if(op.x < cw - 5) {
-            op.x += op.speed;
-            oponente.walk();
-        }
-    }
-    if(opbullet.intersecao(sp) && !jogador.down  && opbullet.bullet)
+    if(opbullet.intersecao(sp) && !sp.down  && opbullet.bullet) {
         jogador.hp -= 1;
-    if(bullet.intersecao(op) && !oponente.down && bullet.bullet)
+        opbullet.x = op.x;
+        opbullet.bullet = false;
+    }
+    if(bullet.intersecao(op) && !op.down && bullet.bullet) {
         oponente.hp -= 1;
+        bullet.x = sp.x;
+        bullet.bullet = false;
+    }
+    if ((op.punch || op.kick) && op.intersecao(jogador) && !sp.down)
+        jogador.hp -= 0.5;
     console.log(jogador.hp);
     console.log(oponente.hp);
     if(jogador.hp <= 0 || oponente.hp <= 0)
@@ -314,7 +344,6 @@ function canvasKeyDownHandler(ev,jogador) {
             sp.special = true;
             break;
         case("Escape"):
-            console.log("escape");
             parent.window.postMessage("menuJogo", "*");
             break;
         default:

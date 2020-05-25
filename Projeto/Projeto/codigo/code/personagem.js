@@ -1,12 +1,11 @@
 class Personagem{
-    constructor(nome,lado) {
+    constructor(nome,lado,hp) {
         this.nome=nome;
         this.lado=lado;
         this.images=this.getRightSprites(nome);
         this.sprites = null;
         this.spriteCurr = null;
-        this.starthp = 5;
-        this.hp = 5;
+        this.hp = hp;
     }
     getRightSprites(nome){
         var facArray=[];
@@ -47,6 +46,7 @@ class Personagem{
             this.spriteCurr.punch = true;
         }
         else if(this.spriteCurr === this.sprites[6]){
+            this.spriteCurr = this.sprites[7];
             this.spriteCurr.x = x;
             this.spriteCurr.punch = false;
         }
@@ -79,6 +79,7 @@ class Personagem{
             this.spriteCurr.kick = true;
         }
         else if(this.spriteCurr === this.sprites[12]){
+            this.spriteCurr = this.sprites[7];
             this.spriteCurr.x = x;
             this.spriteCurr.kick = false;
         }
@@ -91,6 +92,7 @@ class Personagem{
             this.spriteCurr.down = true;
         }
         else if(this.spriteCurr === this.sprites[3]) {
+            this.spriteCurr = this.sprites[7];
             this.spriteCurr.x = x;
             this.spriteCurr.down = false;
         }
@@ -136,6 +138,7 @@ class Personagem{
             this.spriteCurr.x = x;
         }
         else if(this.spriteCurr === this.sprites[2]) {
+            this.spriteCurr = this.sprites[7];
             this.spriteCurr.special = false;
         }
     }
@@ -146,6 +149,7 @@ class Personagem{
         this.spriteCurr.y = this.spriteCurr.yIni;
         this.spriteCurr.left = false;
         this.spriteCurr.right = false;
+        this.spriteCurr.special = false;
         this.falsify();
     }
     falsify() {
