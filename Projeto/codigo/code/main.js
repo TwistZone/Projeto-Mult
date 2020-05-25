@@ -1,5 +1,6 @@
 "use strict";
-
+//Site do autor da música: © https://tobyfox.bandcamp.com/
+//Com os devidos créditos
 
 (function()
 {
@@ -9,16 +10,6 @@
 
 function main()
 {
-
-    var music = document.getElementById("musica");
-
-    var ativado = localStorage.getItem("musica");
-    if (ativado==="on"){
-        music.play();
-        music.loop = true;
-    }
-
-    //var nivel;
     window.addEventListener("message", function (e) {
         if(e.data === "voltarMenuPrincipal")
             voltarMenuPrincipal(e) ;
@@ -51,15 +42,20 @@ function main()
         }else if(e.data === "continuar"){
             continuar(e);
         }else if(e.data === "sair")
-            window.close() ;
+            window.close();
         else
             console.log("unknown message");
     });
 
     showPage("menuPrincipal");
 
+
+    sessionStorage.setItem("musica", 1);
+
+
     //sessionStorage.setItem("nivel", nivel);
 }
+
 
 function showPage(menu) {
 
@@ -87,13 +83,17 @@ function jogar(ev) {
     frm.src;
     //sessionStorage.setItem("nivel", nivel);
     //hidePage(pageNum);
-    sessionStorage.setItem("nivel", 1);
+    sessionStorage.setItem("nivel", 0);
     showPage("game");
 }
 
+
+
+
+
 function escolheJogador(ev) {
     var frm = document.getElementsByTagName("iframe")[0];
-    frm.src;
+    frm.src ;
 
     //hidePage(pageNum);
     showPage("escolheJogador");
@@ -142,7 +142,7 @@ function perder(ev) {
     var frm = document.getElementsByTagName("iframe")[0];
     frm.src;
     //hidePage(pageNum);
-    sessionStorage.setItem("nivel", 1);
+    sessionStorage.setItem("nivel", 0);
     showPage("perder");
 }
 
@@ -156,7 +156,7 @@ function final(ev ) {
     var frm = document.getElementsByTagName("iframe")[0];
     frm.src;
     //hidePage(pageNum);
-    sessionStorage.setItem("nivel", 1);
+    sessionStorage.setItem("nivel", 0);
     showPage("final");
 }
 
@@ -186,8 +186,8 @@ function creditosJogo(ev) {
 function continuar(ev) {
     var frm = document.getElementsByTagName("iframe")[0];
     frm.src;
-    //sessionStorage.setItem("nivel", nivel);
     //hidePage(pageNum);
-    sessionStorage.setItem(nivel, sessionStorage.getItem(nivel) + 1);
+    sessionStorage.setItem("nivel", +sessionStorage.getItem("nivel") +1);
+    console.log(sessionStorage.getItem("nivel"));
     showPage("game");
 }

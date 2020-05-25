@@ -12,7 +12,6 @@ function main() {
     var musicOn = document.getElementById("musicOn");
     var musicOff = document.getElementById("musicOff");
     var voltar = document.getElementById("voltar");
-    var musica = document.getElementById("audio");
 
     inicializa();
 
@@ -50,11 +49,13 @@ function soundOffClikHandler(ev) {
 function musicOnClikHandler(ev) {
     musicOn.style.filter = "none";
     musicOff.style.filter = "grayscale(100%)";
+    sessionStorage.setItem("musica", 1);
 }
 
 function musicOffClikHandler(ev) {
     musicOn.style.filter = "grayscale(100%)";
     musicOff.style.filter = "none";
+    sessionStorage.setItem("musica", 0);
 }
 
 function voltarClikHandler(ev) {

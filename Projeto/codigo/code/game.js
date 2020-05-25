@@ -9,8 +9,10 @@ function main() {
     var canvas = document.getElementById("myCanvas");
     var ctx = canvas.getContext("2d");  //get content
     var finoArray;
+    var imgArray = [];
+    var opArray = [];
 
-     /* ------------------ NIVEIS ---------------------*/
+    /* ------------------ NIVEIS ---------------------*/
 
     var arrPersonagens= ["Fctuc", "Psicologia", "Direito", "Economia", "Medicina", "Farmacia", "Desporto", "Letras"];
 
@@ -19,9 +21,7 @@ function main() {
     if(nivel <= 7){
         /*-------------------- RESET -----------------------*/
         var oponente = new Personagem(arrPersonagens[nivel] , "R" , 5);
-    }
-    else{
-        finalHandler();
+
     }
 
     /*----------------- PERSONAGEM ESCOLHIDA  --------------------*/
@@ -29,34 +29,23 @@ function main() {
     var jogador = new Personagem(Escolhida,"L", 5);
 
 
-    var imgArray = jogador.images;
-    var opArray = oponente.images;
+    imgArray = jogador.images;
+    opArray = oponente.images;
+
     /* -------------- SOM -------------*/
 
-    var isPlaying = false;
-
-    function togglePlay() {
-        if (isPlaying) {
-            musica.pause()
-        } else {
-            musica.play();
-        }
+    var isPlaying = sessionStorage.getItem("musica");
+    var musica = document.getElementById("musica");
+    if(isPlaying === 1){
+        musica.mute = false;
+    }else if(isPlaying === 0){
+        musica.mute = true;
     }
-    musica.onplaying = function() {
-        isPlaying = true;
-    };
-    musica.onpause = function() {
-        isPlaying = false;
-    };
 
-    document.onkeydown = function(e){
-        if(e.code==="KeyQ"){
-            togglePlay();
-        }
-    };
+
 
     /*--------------- CONOMETRO ------------------*/
-    timer();
+    timer(jogador , oponente);
 
     canvas.addEventListener("initend", initEndHandler);
     init(ctx,opArray,imgArray);//carregar todos os componentes
@@ -81,9 +70,6 @@ function main() {
     var kdh=function(ev){
         canvasKeyDownHandler(ev,jogador);
     }
-
-    console.log(jogador.hp);
-    console.log(oponente.hp);
 
 }
 
@@ -189,8 +175,7 @@ function animLoop(ctx,jogador,oponente,finoArray)
 }
 
 function render(ctx, jogador,oponente,finoArray,reqID)
-{
-    const cw = ctx.canvas.width;
+{    const cw = ctx.canvas.width;
     const ch = ctx.canvas.height;
     const sp = jogador.spriteCurr;
     const op = oponente.spriteCurr;
@@ -201,11 +186,13 @@ function render(ctx, jogador,oponente,finoArray,reqID)
 
     //apagar canvas
     ctx.clearRect(0, 0, cw, ch);
+    //if( op.x >= cw)
+        //op.x -= op.speed;
+
     if(!bullet.bullet)
         bullet.x = sp.x - 5;
     if(!opbullet.bullet)
         opbullet.x = op.x + 5;
-    ctx.clearRect(0, 0, cw, ch);
     if(sp.left && sp.x >0){
         sp.x -= sp.speed;
         jogador.walk();
@@ -215,19 +202,20 @@ function render(ctx, jogador,oponente,finoArray,reqID)
             sp.x += sp.speed;
             jogador.walk();
         }
-        op.x += op.speed;
+        if(op.x + op.width < cw) {
+            op.x += op.speed;
+            oponente.walk();
+        }
     }
     if (sp.up) {
         const yMax = 250;
-    }    if (sp.up) {
-    const yMax = 250;
 
         if(sp.y > yMax && !sp.descend)
             sp.y -= sp.speed;
         else if(sp.y === yMax)
             sp.descend = true;
         else if(sp.y < sp.yIni) {
-                sp.descend = true;
+            sp.descend = true;
             sp.y += sp.speed * 2;
         }
         jogador.jump();
@@ -262,36 +250,33 @@ function render(ctx, jogador,oponente,finoArray,reqID)
     if(!sp.left && !sp.right && !sp.up && !sp.down && !sp.kick && !sp.punch && !sp.special)
         jogador.standard();
     if(!op.intersecao(sp)){
-        r = Math.floor(Math.random()* 100);
-        if(r < 50) {
-            if (op.x > sp.x + 70){
+        r = Math.floor(Math.random()* 1000);
+        if(r < 500) {
+            if (op.x > sp.x + 35){
                 op.x -= Math.floor(op.speed / 2);
                 oponente.walk();
             }
             else if(op.x < sp.x)
-                op.x = sp.x + 70;
+                op.x = sp.x + 35;
         }
-        else if( r == 99) {
+        else if(r >= 500 && r < 550 ) {
+            oponente.kick();
+            if (op.intersecao(sp) && !sp.down)
+                jogador.hp -= 0.5;
+        }
+        else if (r >= 550 && r < 650) {
+            oponente.punch();
+            if (op.intersecao(sp) && !sp.down)
+                jogador.hp -= 0.5;
+        }
+        else if( r > 975) {
             oponente.throw();
             opbullet.bullet = true;
         }
     }
-    else{
-        r = Math.floor(Math.random()*5);
-        if(r == 0) {
-            oponente.kick();
-        }
-        else if (r == 1) {
-            oponente.punch();
-        }
-        else if( r > 2){
-            op.x -= op.speed;
-            oponente.walk();
-        }
-        else if(op.x < cw - 5 && !op.intersecao(jogador)) {
-            op.x += op.speed;
-            oponente.walk();
-        }
+    else if(op.x < cw - 5 && !op.intersecao(jogador)) {
+        op.x += op.speed;
+        oponente.walk();
     }
     if(bullet.bullet) {
         const range = 20;
@@ -329,10 +314,8 @@ function render(ctx, jogador,oponente,finoArray,reqID)
         bullet.x = sp.x;
         bullet.bullet = false;
     }
-    if ((op.punch || op.kick) && op.intersecao(jogador) && !sp.down)
+    if ((op === oponente.sprites[6] || op === oponente.sprites [11]) && op.intersecao(sp) && !sp.down)
         jogador.hp -= 0.5;
-
-
     /* -------- VER A VIDA DOS JOGADORES -----------------*/
     if(jogador.hp === 0){
         window.cancelAnimationFrame(reqID);
@@ -378,9 +361,14 @@ function render(ctx, jogador,oponente,finoArray,reqID)
     }
 
     /*--------------- VIDA OPNENTES -----------------------*/
-    if(oponente.hp === 0){
-        window.cancelAnimationFrame(reqID);
-        parent.window.postMessage("ganhar", "*");
+    if(oponente.hp === 0) {
+        if (+sessionStorage.getItem("nivel") === 7) {
+            window.cancelAnimationFrame(reqID);
+            parent.window.postMessage("final", "*");
+        } else {
+            window.cancelAnimationFrame(reqID);
+            parent.window.postMessage("ganhar", "*");
+        }
     }else if (oponente.hp === 0.5){
         finoArray[1].x = 545;
         drawFino(ctx , finoArray[1] ,1);
@@ -425,12 +413,12 @@ function render(ctx, jogador,oponente,finoArray,reqID)
 
 }
 
-function timer(){
+function timer(jogador , oponente){
     var sec = 90;
     var timer = setInterval(function(){
         document.getElementById('clock').innerHTML= sec;
         sec--;
-        if (sec < 0) {
+        if (sec <= 0) {
             clearInterval(timer);
             if(jogador.hp <= oponente.hp){
                 perderHandler();
@@ -441,9 +429,11 @@ function timer(){
         }
 
     }, 1000);
+
 }
 
 function canvasKeyDownHandler(ev,jogador) {
+    var array = new Array(3);
     let sp = jogador.spriteCurr;
     switch (ev.code) {
         case "ArrowLeft":
@@ -522,6 +512,4 @@ function ganharHandler(ev) {
     parent.window.postMessage("ganhar", "*");
 }
 
-function finalHandler(ev) {
-    parent.window.postMessage("final", "*");
-}
+
