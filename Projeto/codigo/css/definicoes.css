@@ -1,0 +1,36 @@
+h2{
+    font-family:"Copperplate Gothic";
+    position: absolute;
+    color:black;
+    font-size:40px;
+    top: 35%;
+    left: 10%;
+}
+h3{
+    font-family:"Copperplate Gothic";
+    position: absolute;
+    color:black;
+    font-size:40px;
+    top: 60%;
+    left: 10%;
+
+}
+
+#soundOn{
+    top: 37%;
+    left: 40%;
+
+}
+
+#soundOff{
+    top: 37%;
+    left: 60%;
+}
+#musicOn{
+    top: 65%;
+    left: 40%;
+}
+#musicOff{
+    top: 65%;
+    left: 60%;
+}

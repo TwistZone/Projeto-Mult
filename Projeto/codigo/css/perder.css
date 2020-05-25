@@ -1,0 +1,18 @@
+
+/*TODO formula que pode ser usada noutros sitios*/
+h1 {
+    font-size: calc(50px + (200 - 50) * ((100vw - 300px) / (1920 - 300)));
+    line-height: calc(1.3em + (1.5 - 1.2) * ((100vw - 300px)/(1600 - 300)));
+}
+
+#sair{
+    position: absolute;
+    left:25%;
+    top: 60%;
+}
+
+#recomecar{
+    position: absolute;
+    left: 60%;
+    top: 60%;
+}
